@@ -53,19 +53,23 @@ module machine_tb;
     reg clk,up,rst,a,b,c,d;
     reg [1:0] inp;
     wire [2:0] win;
-    reg [20:0] A,B,C,D;
+    wire [20:0] A,B,C,D;
     // instance machine design
     machine mt_1(.a(a),.b(b),.c(c),.d(d),.win(win),.rst(rst),.clk(clk));
+    counter Av(.up(a),.rst(rst),.clk(clk),.count(A));
+    counter Bv(.up(b),.rst(rst),.clk(clk),.count(B));
+    counter Cv(.up(c),.rst(rst),.clk(clk),.count(C));
+    counter Dv(.up(d),.rst(rst),.clk(clk),.count(D));
     initial begin 
         rst = 1;
-        A = 0;B = 0;C = 0;D = 0;
+        //A = 0;B = 0;C = 0;D = 0;
         #10
         rst = 0;
     end
     //clock generator
     initial begin 
     clk = 1'b0; 
-    repeat(60) begin
+    repeat(500) begin
         #5 clk= ~clk;
     end
     end
@@ -78,7 +82,7 @@ module machine_tb;
             b = 1;
         else if (inp == 2)
             c = 1;
-        else if (inp == 3)
+        else
             d = 1;       
     end
 
