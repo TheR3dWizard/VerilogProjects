@@ -1,7 +1,7 @@
 module machine(a,b,c,d,win,clk,rst,A,B,C,D);
     input a,b,c,d,clk,rst;
     wire [20:0] A,B,C,D;
-    output reg[2:0] win;
+    output reg[4:0] win;
     counter Av(.up(a),.rst(rst),.clk(clk),.count(A));
     counter Bv(.up(b),.rst(rst),.clk(clk),.count(B));
     counter Cv(.up(c),.rst(rst),.clk(clk),.count(C));
@@ -10,26 +10,34 @@ module machine(a,b,c,d,win,clk,rst,A,B,C,D);
         if (A>B)
             if (A>C)
                 if (A>D)
-                    win = 2'b00;
-                else
-                    win = 2'b11;
-            else
-                if (C>D)
-                    win = 2'b10;
-                else
-                    win = 2'b11;
-        else
-            if (B>C)
-                if (B>D)
-                    win = 2'b01;
-                else
-                    win = 2'b11;
-            else
-                if (C>D)
-                    win = 2'b10;
-                else
-                    win = 2'b11;
+                    if (A>E)
+                        win = 5'b00000;
+                    
 endmodule
 
     
-    
+module compare(
+  input [31:0] a, b, c, d, e,
+  output [31:0] max_number
+);
+
+  // Compare module for two numbers
+  module compare(
+    input [31:0] a,
+    input [31:0] b,
+    output [31:0] max_number
+  );
+    assign max_number = (a > b) ? a : b;
+  endmodule
+
+  // Compare modules for the first level
+  compare comp_ab(.a(a), .b(b), .max_number(max_ab));
+  compare comp_cd(.a(c), .b(d), .max_number(max_cd));
+
+  // Compare module for the second level
+  compare comp_ab_cd(.a(max_ab), .b(max_cd), .max_number(max_ab_cd));
+
+  // Compare module for the third level
+  compare comp_ab_cd_e(.a(max_ab_cd), .b(e), .max_number(max_number));
+
+endmodule
