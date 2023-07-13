@@ -1,4 +1,10 @@
-# VotingSystem
-Digital Design Project that simulates a voting system
+# Description
+Verilog projects for Digital Design Course
 
-machine_tb.v is the final program, the rest are programs i made to figure out how to get to the final solution.
+# List of Projects
+## Voting System
+This is a voting system that can take in votes for 5 candidates and outputs a winner
+
+## Motor Speed Controller
+
+This 

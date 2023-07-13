@@ -1,1 +1,0 @@
-module speed (input clk,rst,input [7:0] force)
