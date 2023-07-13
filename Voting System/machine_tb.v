@@ -93,7 +93,7 @@ module machine_tb;
     end
     always @(posedge clk) begin
         a = 0; b = 0; c = 0; d = 0;
-        inp = $urandom & 15;
+        inp = $urandom & 7;
         if (inp == 0)
             a = 1;
         else if (inp == 1)
